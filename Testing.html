@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+    <title>JOYS OF MOJO</title>
+</head>
+<body class="correct">
+    <div class="container">
+        <div class="center-container">
+            <h1>JOM! LOOK QUIZ</h1>
+            <div class="hidden-input">
+                <label for="staff-code">Staff Code:</label>
+                <input type="text" id="staff-code" maxlength="7" class="custom-input">
+            </div>
+            <div class="hidden-input">
+                <label for="name">Name:</label>
+                <input type="text" id="name" class="custom-input">
+            </div>
+            <div class="hidden-input">
+                <label for="branch">Branch Code:</label>
+                <input type="text" id="branch" maxlength="4" class="custom-input">
+            </div>
+        </div>
+        <button id="start-btn" class="start-btn btn">Start</button>
+        <div id="question-container" class="hide">
+            <div id="question">Question</div>
+            <div id="answer-buttons" class="btn-grid">
+                <button class="btn">Answer 1</button>
+                <button class="btn">Answer 2</button> 
+                <button class="btn">Answer 3</button>
+                <button class="btn">Answer 4</button>
+            </div>
+        </div>
+        <div class="controls">
+            <button id="next-btn" class="next-btn btn hide">Next</button>
+            <button id="submit-btn" class="submit-btn btn hide">Submit</button>
+        </div>
+        <div id="score-container" class="hide">
+            <div id="score"></div>
+            <button id="done-btn" class="done-btn btn hide">Done</button>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+

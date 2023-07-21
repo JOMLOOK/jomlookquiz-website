@@ -1,0 +1,125 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    font-family: Gotham Rounded;
+}
+
+:root {
+    --hue-neutral: 200;
+    --hue-wrong: 0;
+    --hue-correct: 145;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(186, 227, 243);
+}
+
+body.correct {
+    --hue: var(--hue-correct);
+}
+
+body.wrong {
+    --hue: var(--hue-wrong);
+}
+
+.container {
+    width: 1000px;
+    max-width: 80%;
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px; /* 增加 padding 以增加空隙 */
+    box-shadow: 0 0 10px 2px;
+}
+
+.btn-grid {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 10px;
+    margin: 20px auto; /* 设置按钮的水平间距，并居中按钮 */
+}
+
+.btn {
+    --hue: var(--hue-neutral);
+    border: 1px solid hsl(var(--hue), 100%, 30%);
+    background-color: hsl(var(--hue), 100%, 50%);
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: white;
+    outline: none;
+}
+
+.btn:hover {
+    border-color: black;
+}
+
+.start-btn,
+.next-btn,
+.submit-btn {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    display: block;
+    margin: 0 auto;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.controls > * {
+    margin-bottom: 10px; /* 设置子元素之间的间距，此处为 10px */
+}
+
+.hide {
+    display: none;
+}
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    gap: 10px; /* 增加元素间的间隔 */
+}
+
+/* 新增样式 */
+.center-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 新增样式，调整输入框样式 */
+.hidden-input {
+    font-weight: bold;
+    text-align: center;
+    font-size: x-large;
+}
+
+/* Updated CSS for the input elements */
+.center-container .custom-input {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 1000px;
+    outline: none;
+    text-align: center;
+    font-size: large;
+}
+
+/* 独立样式类，调整"Start"按钮位置 */
+.score-container .start-btn {
+    margin-top: 20px;
+}
+
