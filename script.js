@@ -226,7 +226,7 @@ const questions = [
         ]
     },
     {
-        question: 'What is 11 / 5?',
+        question: 'What is 11 * 5?',
         answers: [
             { text: '52', correct: false },
             { text: '55', correct: true }
