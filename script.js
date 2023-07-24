@@ -1,10 +1,11 @@
 const startButton = document.getElementById("start-btn");
-const nextButton = document.getElementById("next-btn");
 const submitButton = document.getElementById("submit-btn");
 const questionContainerElement = document.getElementById('question-container');
 const questionElement = document.getElementById('question');
 const answerButtonsElement = document.getElementById('answer-buttons');
 const scoreElement = document.getElementById('score');
+const doneButton = document.getElementById('done-btn');
+
 
 // 新增获取输入框元素
 const staffCodeInput = document.getElementById('staff-code');
@@ -18,16 +19,15 @@ let currentQuestionNumber;
 let score = 0;
 
 startButton.addEventListener("click", startGame);
-nextButton.addEventListener("click", () => {
-    currentQuestionIndex++;
-    currentQuestionNumber++;
-    setNextQuestion();
-});
-
-submitButton.addEventListener("click", showScore);
+doneButton.addEventListener("click", showStaffCodePage);
 
 function startGame() {
     console.log('Started');
+    if (!isFormValid()) {
+        alert('Please fill in all the required information (Staff Code, Name, and Branch) before starting the quiz.');
+        return;
+    }
+    
     startButton.classList.add('hide');
     shuffleArray(questions);
     shuffledQuestions = questions.slice(0, NUM_QUESTIONS_PER_TASK);
@@ -51,39 +51,40 @@ function setNextQuestion() {
 
 function showQuestion(question, questionNumber) {
     questionElement.innerText = `${questionNumber}. ${question.question}`;
-    question.answers.forEach(answer => {
+    question.answers.forEach((answer, index) => {
         const button = document.createElement('button');
         button.innerText = answer.text;
         button.classList.add('btn');
         if (answer.correct) {
             button.dataset.correct = answer.correct;
         }
-        button.addEventListener('click', selectAnswer);
+        button.addEventListener('click', () => selectAnswer(index));
         answerButtonsElement.appendChild(button);
     });
 }
 
 function resetState() {
-    nextButton.classList.add('hide');
     while (answerButtonsElement.firstChild) {
         answerButtonsElement.removeChild(answerButtonsElement.firstChild);
     }
 }
 
-function selectAnswer(e) {
-    const selectedButton = e.target;
-    const correct = selectedButton.dataset.correct;
+function selectAnswer(selectedIndex) {
+    const correctIndex = shuffledQuestions[currentQuestionIndex].answers.findIndex(answer => answer.correct);
+    const correct = selectedIndex === correctIndex;
     setStatusClass(document.body, correct);
-    Array.from(answerButtonsElement.children).forEach(button => {
-        setStatusClass(button, button.dataset.correct);
+    Array.from(answerButtonsElement.children).forEach((button, index) => {
+        setStatusClass(button, index === correctIndex);
     });
     if (correct) {
         score++;
     }
-    if (shuffledQuestions.length > currentQuestionIndex + 1) {
-        nextButton.classList.remove('hide');
+    currentQuestionIndex++;
+    currentQuestionNumber++;
+    if (shuffledQuestions.length > currentQuestionIndex) {
+        setNextQuestion();
     } else {
-        submitButton.classList.remove('hide');
+        showScore();
     }
 }
 
@@ -125,15 +126,8 @@ function showScore() {
     // 切换按钮文本
     startButton.innerText = 'DONE';
     startButton.classList.remove('hide');
+    doneButton.classList.remove('hide');
 }
-
-startButton.addEventListener("click", () => {
-    if (startButton.innerText === 'Start') {
-        startGame();
-    } else if (startButton.innerText === 'DONE') {
-        showStaffCodeCover();
-    }
-});
 
 function showStaffCodeCover() {
     // 隐藏问题和得分部分
@@ -149,21 +143,25 @@ function showStaffCodeCover() {
     // 切换按钮文本
     startButton.innerText = 'Start';
     startButton.classList.remove('hide');
+    doneButton.classList.add('hide');
 }
 
 function showStaffCodePage() {
     // 显示问题和得分部分，隐藏输入框和得分部分
-    questionContainerElement.classList.remove('hide');
-    document.querySelectorAll('.hidden-input').forEach(input => {
-        input.style.display = 'none';
-    });
+    questionContainerElement.classList.add('hide');
     const scoreContainer = document.getElementById('score-container');
     scoreContainer.classList.add('hide');
-    submitButton.classList.remove('hide');
+
+    document.querySelectorAll('.hidden-input').forEach(input => {
+        input.style.display = 'block';
+    });
+    
+    score = 0; // Reset the score for a new quiz
 
     // 切换按钮文本
     startButton.innerText = 'Start';
     startButton.classList.remove('hide');
+    doneButton.classList.add('hide');
 }
 
 startButton.addEventListener("click", () => {
@@ -222,7 +220,8 @@ const questions = [
         question: 'What is 10 / 5?',
         answers: [
             { text: '50', correct: false },
-            { text: '2', correct: true }
+            { text: '2', correct: true },
+            { text: '5', correct: false }
         ]
     },
     {
