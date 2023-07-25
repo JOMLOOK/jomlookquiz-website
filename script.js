@@ -20,6 +20,36 @@ let score = 0;
 
 startButton.addEventListener("click", startGame);
 doneButton.addEventListener("click", showStaffCodePage);
+submitButton.addEventListener('click', submitForm);
+
+function submitForm() {
+    const formData = {
+      staffCode: staffCodeInput.value,
+      name: nameInput.value,
+      branch: branchInput.value
+    };
+
+    // 使用fetch API将表单数据发送至后端服务器
+  fetch('/submit-form', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  }).then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error('Network response was not ok.');
+    }
+  }).then(data => {
+    // 服务器返回的数据，如果需要可以进行处理
+    console.log(data);
+  }).catch(error => {
+    // 处理错误
+    console.error('Error:', error);
+  });
+}
 
 function startGame() {
     console.log('Started');
